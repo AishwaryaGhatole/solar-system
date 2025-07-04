@@ -1,0 +1,124 @@
+.heading{
+  position: fixed;
+  top: 1%;
+  left: 1%;
+  color: white;
+  border: 3px solid;
+  border-image: linear-gradient(to right, #d53ab3 0%, #3a4ed5 100%) 3;
+  padding: 15px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#label {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 14px;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 100;
+  border: 1px solid;
+  border-image: conic-gradient(#00ffff, #ff00ff, #00ffff) 1;
+  background-clip: padding-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#toggleRotation {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px 16px;
+  border-image: conic-gradient(#00ffff, #ff00ff, #00ffff) 1;
+  color: white;
+  background-color: black;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 200;
+  transition: background 0.3s ease;
+}
+
+#toggleRotation:hover {
+  background: linear-gradient(135deg, #ff00ff, #00ffff);
+}
+
+#controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  color: white;
+  font-size: 14px;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 200;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+}
+
+#controls label {
+  display: block;
+  margin: 10px 0;
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+  transition: transform 0.3s ease;
+}
+
+#controls label:hover {
+  transform: translateX(5px);
+  color: #fff;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 150px;
+  height: 6px;
+  background: linear-gradient(90deg, #3a4ed5, #d53ab3);
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 14px;
+  width: 14px;
+  background: #fff;
+  border: 2px solid #3a4ed5;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.3);
+}
+
+
+
+#resetSpeed {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background-color: #ff5e5e;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#toggleControls{
+  margin-top: 10px;
+  padding: 6px 12px;
+  border: 1px solid;
+  border-image: conic-gradient(#00ffff, #ff00ff, #00ffff) 1;
+  color: white;
+  background-color: black;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#toggleControls:hover {
+    border: 1px solid;
+  border-image: conic-gradient(#00ffff, #00ffff, #ff00ff) 1;
+}
+
+
+
