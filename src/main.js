@@ -4,21 +4,21 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 // Import texture assets
-import starBg from "./stars.jpg";
-import earthBg from "./earth.jpg";
-import jupiterBg from "./jupiter.jpg";
-import marsBg from "./mars.jpg";
-import mercuryBg from "./mercury.jpg";
-import neptuneBg from "./neptune.jpg";
-import plutoBg from "./pluto.jpg";
-import saturnBg from "./saturn.jpg";
-import sunBg from "./sun.jpg";
-import moonBg from "./moon.jpg";
-import uranusBg from "./uranus.jpg";
-import venusBg from "./venus.jpg";
-import saturnRingBg from "./saturn-ring.png";
-import uranusRingBg from "./uranus-ring.png";
-import white from "./white.jpg";
+import starBg from "/stars.jpg";
+import earthBg from "/earth.jpg";
+import jupiterBg from "/jupiter.jpg";
+import marsBg from "/mars.jpg";
+import mercuryBg from "/mercury.jpg";
+import neptuneBg from "/neptune.jpg";
+import plutoBg from "/pluto.jpg";
+import saturnBg from "/saturn.jpg";
+import sunBg from "/sun.jpg";
+import moonBg from "/moon.jpg";
+import uranusBg from "/uranus.jpg";
+import venusBg from "/venus.jpg";
+import saturnRingBg from "/saturn-ring.png";
+import uranusRingBg from "/uranus-ring.png";
+import white from "/white.jpg";
 
 // =================== Scene, Camera & Renderer Setup ====================
 
