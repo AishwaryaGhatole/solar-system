@@ -57,8 +57,7 @@
   overflow-y: auto;
   z-index: 200;
   border-radius: 8px;
-  background: rgba(25, 25, 25, 0.578);
-  backdrop-filter: blur(2px);
+  background: rgba(25, 25, 25, 0.764);
   width: fit-content;
 }
 

@@ -97,6 +97,9 @@ toggleControls.addEventListener("click", () => {
     ? "Hide Controls"
     : "Show Controls";
   controls.style.display = !isLabelActive ? "block" : "none";
+  controls.style.background = !isLabelActive
+    ? "rgba(25, 25, 25, 0.764)"
+    : "rgba(25, 25, 25, 0)";
 });
 
 // =================== Planet & Sun Setup ====================
