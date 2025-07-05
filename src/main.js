@@ -4,45 +4,21 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 // Import texture assets
-import starBg from "../public/stars.jpg";
-import earthBg from "../public/earth.jpg";
-import jupiterBg from "../public/jupiter.jpg";
-import marsBg from "../public/mars.jpg";
-import mercuryBg from "../public/mercury.jpg";
-import neptuneBg from "../public/neptune.jpg";
-import plutoBg from "../public/pluto.jpg";
-import saturnBg from "../public/saturn.jpg";
-import sunBg from "../public/sun.jpg";
-import moonBg from "../public/moon.jpg";
-import uranusBg from "../public/uranus.jpg";
-import venusBg from "../public/venus.jpg";
-import saturnRingBg from "../public/saturn-ring.png";
-import uranusRingBg from "../public/uranus-ring.png";
-import white from "../public/white.jpg";
-
-// =================== Setup Speeds for Orbit Controls ====================
-
-// Default orbital speeds for each planet
-const defaultSpeeds = {
-  mercury: 0.04,
-  venus: 0.015,
-  earth: 0.01,
-  mars: 0.008,
-  jupiter: 0.002,
-  saturn: 0.0009,
-  uranus: 0.0004,
-  neptune: 0.0001,
-  pluto: 0.0007,
-};
-
-let speeds = { ...defaultSpeeds };
-
-// Add event listeners to speed sliders
-Object.keys(defaultSpeeds).forEach((planet) => {
-  document.getElementById(`${planet}Speed`).addEventListener("input", (e) => {
-    speeds[planet] = parseFloat(e.target.value);
-  });
-});
+import starBg from "./stars.jpg";
+import earthBg from "./earth.jpg";
+import jupiterBg from "./jupiter.jpg";
+import marsBg from "./mars.jpg";
+import mercuryBg from "./mercury.jpg";
+import neptuneBg from "./neptune.jpg";
+import plutoBg from "./pluto.jpg";
+import saturnBg from "./saturn.jpg";
+import sunBg from "./sun.jpg";
+import moonBg from "./moon.jpg";
+import uranusBg from "./uranus.jpg";
+import venusBg from "./venus.jpg";
+import saturnRingBg from "./saturn-ring.png";
+import uranusRingBg from "./uranus-ring.png";
+import white from "./white.jpg";
 
 // =================== Scene, Camera & Renderer Setup ====================
 
@@ -104,7 +80,12 @@ toggleControls.addEventListener("click", () => {
 
 // =================== Planet & Sun Setup ====================
 
-const textureLoader = new THREE.TextureLoader();
+const loadingManager = new THREE.LoadingManager(() => {
+  document.getElementById("preloader").style.display = "none";
+});
+
+const textureLoader = new THREE.TextureLoader(loadingManager);
+
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 let mouseX = 0;
@@ -112,9 +93,7 @@ let mouseY = 0;
 const clickableObjects = [];
 
 // Create Sun
-const sunMap = textureLoader.load(sunBg, () => {
-  document.getElementById("preloader").style.display = "none";
-});
+const sunMap = textureLoader.load(sunBg);
 sunMap.colorSpace = THREE.SRGBColorSpace;
 const sun = new THREE.Mesh(
   new THREE.SphereGeometry(16, 30, 30),
@@ -203,6 +182,30 @@ moon.name = "Moon";
 moon.position.x = 10;
 earth.mesh.add(moon);
 clickableObjects.push(moon);
+
+// =================== Setup Speeds for Orbit Controls ====================
+
+// Default orbital speeds for each planet
+const defaultSpeeds = {
+  mercury: 0.04,
+  venus: 0.015,
+  earth: 0.01,
+  mars: 0.008,
+  jupiter: 0.002,
+  saturn: 0.0009,
+  uranus: 0.0004,
+  neptune: 0.0001,
+  pluto: 0.0007,
+};
+
+let speeds = { ...defaultSpeeds };
+
+// Add event listeners to speed sliders
+Object.keys(defaultSpeeds).forEach((planet) => {
+  document.getElementById(`${planet}Speed`).addEventListener("input", (e) => {
+    speeds[planet] = parseFloat(e.target.value);
+  });
+});
 
 // =================== Lighting ====================
 
