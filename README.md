@@ -12,8 +12,7 @@ Explore the planets, hover to reveal names, control orbital speeds, and enjoy sm
 
 3. After opening the code file in terminal, simply open it with VScode using `code .` command.
 
-4. Assuming you're in Local Terminal/VScode terminal and you downloaded the zip file from Github i.e, without
-   `node_modules` folder only then, with the appropriate file path opened, Install node package
+4. (Assuming you're in Local Terminal/VScode terminal with the appropriate file path opened), Install node package
    manager by using `npm install`.
 
 5. Once the 4. step is done, you'll see a folder named `node_modules` which has all the dependencies for running the code
