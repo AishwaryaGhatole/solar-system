@@ -12,16 +12,17 @@ Explore the planets, hover to reveal names, control orbital speeds, and enjoy sm
 
 3. After opening the code file in terminal, simply open it with VScode using `code .` command.
 
-4. (assuming you're in Local Terminal/VScode terminal) Install node package manager by using `npm install`.
+4. (assuming you're in Local Terminal/VScode terminal, with the appropriate file path opened) Install node package
+   manager by using `npm install`.
 
 5. Once the 4. step is done, you'll see a folder named `node_modules` which has all the dependencies for running the code
    in your local machine.
 
-6. Now, in terminal(any with the appropriate file path opened) Use command `npm run dev`.
+6. Now, in terminal(any, with the appropriate file path opened) Use command `npm run dev`.
 
-7. You'll most see the localhost path link in your terminal.
+7. You'll see the localhost path link in your terminal.
 
-8. Click on the path while pressing CTRL key to get Redirected to the project `Solar System`.
+8. Click on the path while pressing `CTRL` key to get Redirected to the project `Solar System`.
 
 ---
 
