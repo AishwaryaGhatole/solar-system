@@ -3,7 +3,7 @@
 An interactive, 3D Solar System simulation built using **Three.js**.  
 Explore the planets, hover to reveal names, control orbital speeds, and enjoy smooth animations.
 
-## Step to run the code in your own local machines
+## Step to run the code in your own Local Machines
 
 1. Once the Zip file is downloaded in your local machines, extract all files.
 
