@@ -1,3 +1,11 @@
+/* ========== Standard Style for body  ========== */
+
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* ========== Global Heading ========== */
 .heading {
   position: fixed;
@@ -159,12 +167,12 @@ input[type="range"]:hover::-webkit-slider-thumb {
 }
 
 .footer a {
-  color: #3a4ed5;
+  color: #a1aeff;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease;
 }
 
 .footer a:hover {
-  color: #d53ab3;
+  color: #ffaded;
 }
