@@ -3,7 +3,7 @@ import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-// Imported maps of each planet
+// Import texture assets
 import starBg from "../public/stars.jpg";
 import earthBg from "../public/earth.jpg";
 import jupiterBg from "../public/jupiter.jpg";
@@ -20,63 +20,36 @@ import saturnRingBg from "../public/saturn-ring.png";
 import uranusRingBg from "../public/uranus-ring.png";
 import white from "../public/white.jpg";
 
-// inputs of each planet speed range labels
-document
-  .getElementById("mercurySpeed")
-  .addEventListener(
-    "input",
-    (e) => (speeds.mercury = parseFloat(e.target.value))
-  );
-document
-  .getElementById("venusSpeed")
-  .addEventListener(
-    "input",
-    (e) => (speeds.venus = parseFloat(e.target.value))
-  );
-document
-  .getElementById("earthSpeed")
-  .addEventListener(
-    "input",
-    (e) => (speeds.earth = parseFloat(e.target.value))
-  );
-document
-  .getElementById("marsSpeed")
-  .addEventListener("input", (e) => (speeds.mars = parseFloat(e.target.value)));
-document
-  .getElementById("jupiterSpeed")
-  .addEventListener(
-    "input",
-    (e) => (speeds.jupiter = parseFloat(e.target.value))
-  );
-document
-  .getElementById("saturnSpeed")
-  .addEventListener(
-    "input",
-    (e) => (speeds.saturn = parseFloat(e.target.value))
-  );
-document
-  .getElementById("uranusSpeed")
-  .addEventListener(
-    "input",
-    (e) => (speeds.uranus = parseFloat(e.target.value))
-  );
-document
-  .getElementById("neptuneSpeed")
-  .addEventListener(
-    "input",
-    (e) => (speeds.neptune = parseFloat(e.target.value))
-  );
-document
-  .getElementById("plutoSpeed")
-  .addEventListener(
-    "input",
-    (e) => (speeds.pluto = parseFloat(e.target.value))
-  );
+// =================== Setup Speeds for Orbit Controls ====================
 
-// Scene setup
+// Default orbital speeds for each planet
+const defaultSpeeds = {
+  mercury: 0.04,
+  venus: 0.015,
+  earth: 0.01,
+  mars: 0.008,
+  jupiter: 0.002,
+  saturn: 0.0009,
+  uranus: 0.0004,
+  neptune: 0.0001,
+  pluto: 0.0007,
+};
+
+let speeds = { ...defaultSpeeds };
+
+// Add event listeners to speed sliders
+Object.keys(defaultSpeeds).forEach((planet) => {
+  document.getElementById(`${planet}Speed`).addEventListener("input", (e) => {
+    speeds[planet] = parseFloat(e.target.value);
+  });
+});
+
+// =================== Scene, Camera & Renderer Setup ====================
+
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
   45,
@@ -84,17 +57,15 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-
-// orbit controls for camera position (for each element rendering)
 const orbit = new OrbitControls(camera, renderer.domElement);
+
 camera.position.set(-90, 140, 140);
 orbit.update();
 
-//code for global light for entire 3D scene
-const ambientLight = new THREE.AmbientLight(0x333333);
-scene.add(ambientLight);
+// =================== Lights and Background ====================
 
-//code for star background cube
+scene.add(new THREE.AmbientLight(0x333333));
+
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 scene.background = cubeTextureLoader.load([
   starBg,
@@ -105,7 +76,8 @@ scene.background = cubeTextureLoader.load([
   starBg,
 ]);
 
-//setup code to pause/resume the motion of planets
+// =================== Global Variables ====================
+
 let isRotationActive = true;
 const toggleBtn = document.getElementById("toggleRotation");
 toggleBtn.addEventListener("click", () => {
@@ -115,10 +87,10 @@ toggleBtn.addEventListener("click", () => {
     : "Resume Rotation";
 });
 
-// code to toggle the input range labels
 let isLabelActive = false;
 const toggleControls = document.getElementById("toggleControls");
 const controls = document.getElementById("controlContainer");
+
 toggleControls.addEventListener("click", () => {
   isLabelActive = !isLabelActive;
   toggleControls.textContent = !isLabelActive
@@ -127,7 +99,8 @@ toggleControls.addEventListener("click", () => {
   controls.style.display = !isLabelActive ? "block" : "none";
 });
 
-//setup code for visibility of the names of each planet name
+// =================== Planet & Sun Setup ====================
+
 const textureLoader = new THREE.TextureLoader();
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -135,31 +108,34 @@ let mouseX = 0;
 let mouseY = 0;
 const clickableObjects = [];
 
-const label = document.getElementById("label");
-
-//code to create Sun
-const sunMap = textureLoader.load(sunBg);
+// Create Sun
+const sunMap = textureLoader.load(sunBg, () => {
+  document.getElementById("preloader").style.display = "none";
+});
 sunMap.colorSpace = THREE.SRGBColorSpace;
-const sunGeo = new THREE.SphereGeometry(16, 30, 30);
-const sunMat = new THREE.MeshBasicMaterial({ map: sunMap });
-const sun = new THREE.Mesh(sunGeo, sunMat);
+const sun = new THREE.Mesh(
+  new THREE.SphereGeometry(16, 30, 30),
+  new THREE.MeshBasicMaterial({ map: sunMap })
+);
 sun.name = "Sun";
 scene.add(sun);
 clickableObjects.push(sun);
 
-//code to create planets
+// Planet creation helper
 function createPlanet(size, texture, position, ring, name) {
   const planetMap = textureLoader.load(texture);
   planetMap.colorSpace = THREE.SRGBColorSpace;
-  const Geo = new THREE.SphereGeometry(size, 30, 30);
-  const Mat = new THREE.MeshStandardMaterial({ map: planetMap });
 
-  const mesh = new THREE.Mesh(Geo, Mat);
+  const mesh = new THREE.Mesh(
+    new THREE.SphereGeometry(size, 30, 30),
+    new THREE.MeshStandardMaterial({ map: planetMap })
+  );
   mesh.name = name;
   clickableObjects.push(mesh);
 
   const obj = new THREE.Object3D();
   obj.add(mesh);
+  mesh.position.x = position;
 
   if (ring) {
     const ringGeo = new THREE.RingGeometry(
@@ -172,30 +148,25 @@ function createPlanet(size, texture, position, ring, name) {
       side: THREE.DoubleSide,
     });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-    obj.add(ringMesh);
     ringMesh.position.x = position;
     ringMesh.rotation.x = -0.5 * Math.PI;
+    obj.add(ringMesh);
   }
 
-  //code for the orbits of each planet
   const orbitMap = textureLoader.load(white);
   orbitMap.colorSpace = THREE.SRGBColorSpace;
-  const orbitGeo = new THREE.RingGeometry(position - 0.3, position + 0.3, 64);
-  const orbitMat = new THREE.MeshBasicMaterial({
-    map: orbitMap,
-    side: THREE.DoubleSide,
-  });
-  const orbitMesh = new THREE.Mesh(orbitGeo, orbitMat);
-  scene.add(orbitMesh);
+  const orbitMesh = new THREE.Mesh(
+    new THREE.RingGeometry(position - 0.3, position + 0.3, 64),
+    new THREE.MeshBasicMaterial({ map: orbitMap, side: THREE.DoubleSide })
+  );
   orbitMesh.rotation.x = -0.5 * Math.PI;
+  scene.add(orbitMesh);
 
   scene.add(obj);
-  mesh.position.x = position;
-
   return { mesh, obj };
 }
 
-// Create all planets
+// Create Planets
 const mercury = createPlanet(3.2, mercuryBg, 28, null, "Mercury");
 const venus = createPlanet(5.8, venusBg, 44, null, "Venus");
 const earth = createPlanet(6, earthBg, 62, null, "Earth");
@@ -218,51 +189,26 @@ const uranus = createPlanet(
 const neptune = createPlanet(7, neptuneBg, 200, null, "Neptune");
 const pluto = createPlanet(2.8, plutoBg, 216, null, "Pluto");
 
-// Create Moon
+// Create Moon orbiting Earth
 const moonMap = textureLoader.load(moonBg);
 moonMap.colorSpace = THREE.SRGBColorSpace;
-const moonGeo = new THREE.SphereGeometry(1.5, 30, 30);
-const moonMat = new THREE.MeshStandardMaterial({ map: moonMap });
-const moon = new THREE.Mesh(moonGeo, moonMat);
+const moon = new THREE.Mesh(
+  new THREE.SphereGeometry(1.5, 30, 30),
+  new THREE.MeshStandardMaterial({ map: moonMap })
+);
 moon.name = "Moon";
-earth.mesh.add(moon);
 moon.position.x = 10;
+earth.mesh.add(moon);
 clickableObjects.push(moon);
 
-//orbit speed of each planet
-const defaultSpeeds = {
-  mercury: 0.04,
-  venus: 0.015,
-  earth: 0.01,
-  mars: 0.008,
-  jupiter: 0.002,
-  saturn: 0.0009,
-  uranus: 0.0004,
-  neptune: 0.0001,
-  pluto: 0.0007,
-};
+// =================== Lighting ====================
 
-let speeds = { ...defaultSpeeds };
+scene.add(new THREE.PointLight(0xffffff, 40000, 300));
 
-const resetBtn = document.getElementById("resetSpeed");
-resetBtn.addEventListener("click", () => {
-  speeds = { ...defaultSpeeds };
-  document.getElementById("mercurySpeed").value = defaultSpeeds.mercury;
-  document.getElementById("venusSpeed").value = defaultSpeeds.venus;
-  document.getElementById("earthSpeed").value = defaultSpeeds.earth;
-  document.getElementById("marsSpeed").value = defaultSpeeds.mars;
-  document.getElementById("jupiterSpeed").value = defaultSpeeds.jupiter;
-  document.getElementById("saturnSpeed").value = defaultSpeeds.saturn;
-  document.getElementById("uranusSpeed").value = defaultSpeeds.uranus;
-  document.getElementById("neptuneSpeed").value = defaultSpeeds.neptune;
-  document.getElementById("plutoSpeed").value = defaultSpeeds.pluto;
-});
+// =================== Mouse Tracking for Hover Labels ====================
 
-// Lighting
-const pointLight = new THREE.PointLight(0xffffff, 40000, 300);
-scene.add(pointLight);
+const label = document.getElementById("label");
 
-//code to track mouse position
 window.addEventListener("mousemove", (event) => {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -270,7 +216,17 @@ window.addEventListener("mousemove", (event) => {
   mouseY = event.clientY;
 });
 
-// Animation loop
+// =================== Reset Speed Button ====================
+
+document.getElementById("resetSpeed").addEventListener("click", () => {
+  speeds = { ...defaultSpeeds };
+  Object.keys(defaultSpeeds).forEach((planet) => {
+    document.getElementById(`${planet}Speed`).value = defaultSpeeds[planet];
+  });
+});
+
+// =================== Animation Loop ====================
+
 function animate() {
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(clickableObjects, true);
@@ -312,7 +268,8 @@ function animate() {
 
 renderer.setAnimationLoop(animate);
 
-// Handle window resize
+// =================== Window Resize Handling ====================
+
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();

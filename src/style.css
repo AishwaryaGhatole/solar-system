@@ -1,8 +1,9 @@
-.heading{
+/* ========== Global Heading ========== */
+.heading {
   position: fixed;
-
   top: 1%;
   left: 1%;
+  font-size: 18px;
   color: white;
   border: 3px solid;
   border-image: linear-gradient(to right, #d53ab3 0%, #3a4ed5 100%) 3;
@@ -10,6 +11,7 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+/* ========== Planet Label (Shown on Hover) ========== */
 #label {
   position: fixed;
   background: rgba(0, 0, 0, 0.8);
@@ -24,29 +26,30 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+/* ========== Toggle Rotation Button ========== */
 #toggleRotation {
   position: fixed;
-  bottom: 20px;
+  bottom: 35px;
   left: 20px;
-  padding: 10px 16px;
+  padding: 6px 12px;
+  border: 1px solid;
   border-image: conic-gradient(#00ffff, #ff00ff, #00ffff) 1;
   color: white;
   background-color: black;
   cursor: pointer;
-  font-size: 14px;
   z-index: 200;
   transition: background 0.3s ease;
 }
 
 #toggleRotation:hover {
-  background: linear-gradient(135deg, #ff00ff, #00ffff);
+  border-image: conic-gradient(#00ffff, #00ffff, #ff00ff) 1;
 }
 
+/* ========== Controls Container (Sliders & Buttons) ========== */
 #controls {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: rgba(0, 0, 0, 0.8);
   padding: 15px;
   color: white;
   font-size: 14px;
@@ -54,9 +57,9 @@
   overflow-y: auto;
   z-index: 200;
   border-radius: 8px;
-  backdrop-filter: blur(4px);
 }
 
+/* ========== Planet Speed Labels ========== */
 #controls label {
   display: block;
   margin: 10px 0;
@@ -69,6 +72,7 @@
   color: #fff;
 }
 
+/* ========== Range Sliders for Speed Control ========== */
 input[type="range"] {
   -webkit-appearance: none;
   width: 150px;
@@ -93,8 +97,7 @@ input[type="range"]:hover::-webkit-slider-thumb {
   transform: scale(1.3);
 }
 
-
-
+/* ========== Reset Speed Button ========== */
 #resetSpeed {
   margin-top: 10px;
   padding: 6px 12px;
@@ -105,7 +108,8 @@ input[type="range"]:hover::-webkit-slider-thumb {
   border-radius: 4px;
 }
 
-#toggleControls{
+/* ========== Toggle Controls Button ========== */
+#toggleControls {
   margin-top: 10px;
   padding: 6px 12px;
   border: 1px solid;
@@ -117,9 +121,21 @@ input[type="range"]:hover::-webkit-slider-thumb {
 }
 
 #toggleControls:hover {
-    border: 1px solid;
+  border: 1px solid;
   border-image: conic-gradient(#00ffff, #00ffff, #ff00ff) 1;
 }
 
-
-
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
